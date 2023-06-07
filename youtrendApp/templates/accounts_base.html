@@ -1,0 +1,53 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Login</title>
+    <!-- Font Awsome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <!-- Custom CSS -->
+    <style>
+        .card {
+            margin: auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            height: 400px;
+            width: 400px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 29px rgba(202, 202, 202, 0.25);
+            border-radius: 16px;
+        }
+
+        .card-body {
+            width: 100%;
+            max-width: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+    </style>
+</head>
+<body>
+<div class="card">
+    <div class="card-body">
+        <h3>YouTrend <i class="fa fa-signal" aria-hidden="true"></i></h3>
+        {% block content %}
+        {% endblock %}
+    </div>
+</div>
+{% block page_scripts %}
+{% endblock %}
+</body>
+</html>

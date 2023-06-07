@@ -1,0 +1,45 @@
+{% extends 'accounts_base.html' %}
+{% load static %}
+{% block title %}Register{% endblock %}
+{% block content %}
+    <form method="POST" action="">
+        {% csrf_token %}
+        {{ form.username }}
+        {{ form.email }}
+        {{ form.password1 }}
+        {{ form.password2 }}
+
+        <input class="btn btn-primary" type="submit" value="Register">
+        <div class="mt-4">
+            {% if form.errors %}
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <div class="alert alert-danger">
+                            <strong>{{ error|escape }}</strong>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </form>
+{% endblock %}
+{% block page_scripts %}
+    <script>
+		// Query All input fields
+        const form_fields = document.getElementsByTagName('input');
+        form_fields[1].placeholder='Username..';
+		form_fields[2].placeholder='Email..';
+		form_fields[3].placeholder='Enter password...';
+		form_fields[4].placeholder='Re-enter Password...';
+
+		for (let field in form_fields) {
+            if (field < 5) form_fields[field].setAttribute("style", "margin-bottom: 20px;");
+            if (field < 5) form_fields[field].className += 'form-control';
+		}
+    </script>
+{% endblock %}

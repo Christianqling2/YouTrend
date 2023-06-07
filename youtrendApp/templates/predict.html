@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load my_filters %}
+
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <h3>Video Details</h3>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <input type="text" name="title" class="form-control" placeholder="Title" required>
+                        <br>
+                        <textarea type="text" name="description" class="form-control" placeholder="Description..."
+                                  style="height: 150px; resize: none" required></textarea>
+                        <br>
+                        <textarea type="text" name="tags" class="form-control" placeholder="Tag1|Tag2|Tag3..."
+                                  style="height: 150px; resize: none" required></textarea>
+                        <br>
+                        <button class="btn btn-primary ml-2" type="submit" style="float: right">Predict</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <h3>Previous Ideas</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% for result in previous_ideas %}
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <a href="{% url "update_prediction" result.id %}" class="card-title" style="display: inline; color: black; font-weight: 500;">{{ result.title }}</a>
+                                <br>
+                                <span class="badge badge-primary">{{ result.category_name }}</span>
+                                <span class="badge badge-danger"><a href="{% url "delete_prediction" result.id %}" style="color: white">Delete<i class="fa fa-times"></i></a></span>
+
+                                <p class="card-text">
+                                    <small class="text-muted">{{ result.description }}</small>
+                                </p>
+                            </div>
+                            <div class="col">
+                                <br>
+                                <p>
+                                {% for tag in result.tags|split_tags %}
+                                    <span class="badge badge-secondary">{{ tag }}</span>
+                                {% endfor %}
+                                </p>
+                                <p>
+                                    Trend Index: <span class="badge badge-success">{{ result.trend_index|floatformat:1 }}%</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

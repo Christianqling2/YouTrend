@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <h3>Video Details</h3>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <input type="text" name="title" class="form-control" placeholder="Title" value="{{ previous_idea.title|safe }}" required>
+                        <br>
+                        <textarea id="desc_ta" type="text" name="description" class="form-control" placeholder="Description..."
+                                  style="height: 150px; resize: none" required></textarea>
+                        <br>
+                        <textarea id="tags_ta" type="text" name="tags" class="form-control" placeholder="Tag1|Tag2|Tag3..."
+                                  style="height: 150px; resize: none" required></textarea>
+                        <br>
+                        <label>Category:
+                            <select name="category" required
+                                    style="border: 1px solid #ced4da; border-radius: 8px;color: #495057">
+                                {% for category in categories %}
+                                    <option value="{{ category.id }}" {% if category.id == previous_idea.category_id %}selected{% endif %}>{{ category.category_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </label>
+                        <br>
+                        <button class="btn btn-primary ml-2" type="submit" style="float: right">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block page_scripts %}
+    <script>
+        document.getElementById("desc_ta").value = "{{ previous_idea.description|safe }}";
+        document.getElementById("tags_ta").value = "{{ previous_idea.tags|safe }}";
+    </script>
+{% endblock %}
